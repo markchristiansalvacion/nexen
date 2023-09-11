@@ -1,0 +1,125 @@
+{
+    "_readme": [
+        "This file locks the dependencies of your project to a known state",
+        "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
+        "This file is @generated automatically"
+    ],
+    "content-hash": "f016cf163c3325c202317a01539b3404",
+    "packages": [
+        {
+            "name": "dvdmarchetti/phpbarcode",
+            "version": "dev-master",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/dvdmarchetti/php-barcode-generator.git",
+                "reference": "113c6b6aea04121435151a39b289f8a889ea5b08"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/dvdmarchetti/php-barcode-generator/zipball/113c6b6aea04121435151a39b289f8a889ea5b08",
+                "reference": "113c6b6aea04121435151a39b289f8a889ea5b08",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.3.2"
+            },
+            "default-branch": true,
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "PHPBarcode\\": "src/PHPBarcode/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Davide Marchetti",
+                    "email": "dvdmarchetti663@gmail.com",
+                    "role": "Developer"
+                }
+            ],
+            "description": "Barcodes in PHP made easy",
+            "keywords": [
+                "barcode",
+                "generator"
+            ],
+            "support": {
+                "issues": "https://github.com/dvdmarchetti/PHP-Barcode-Generator/issues",
+                "source": "https://github.com/dvdmarchetti/PHP-Barcode-Generator/tree/master"
+            },
+            "time": "2020-05-08T21:09:25+00:00"
+        },
+        {
+            "name": "oshomo/csv-utils",
+            "version": "v6.0.1",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/hoshomoh/CSVUtils.git",
+                "reference": "34afb02e0e2506346ce429c2d7ff64bb7eadd5d9"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/hoshomoh/CSVUtils/zipball/34afb02e0e2506346ce429c2d7ff64bb7eadd5d9",
+                "reference": "34afb02e0e2506346ce429c2d7ff64bb7eadd5d9",
+                "shasum": ""
+            },
+            "require": {
+                "ext-dom": "*",
+                "ext-json": "*",
+                "ext-mbstring": "*",
+                "ext-simplexml": "*",
+                "php": ">7.1.3"
+            },
+            "require-dev": {
+                "friendsofphp/php-cs-fixer": "^2.19 || ^3.0",
+                "phpunit/phpunit": "^5.7 || ^6.5 || ^7.0 || ^8.0"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Oshomo\\CsvUtils\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "Apache-2.0"
+            ],
+            "authors": [
+                {
+                    "name": "Oshomo Oforomeh",
+                    "email": "oshomo.oforomeh2010@gmail.com"
+                }
+            ],
+            "description": "A CSV utility to read, validate and write data to multiple format including JSON, XML etc.",
+            "keywords": [
+                "csv-converter",
+                "csv-json-converter",
+                "csv-reading",
+                "csv-validator",
+                "csv-xml-converter",
+                "library",
+                "php",
+                "php-csv-validator"
+            ],
+            "support": {
+                "issues": "https://github.com/hoshomoh/CSVUtils/issues",
+                "source": "https://github.com/hoshomoh/CSVUtils/tree/v6.0.1"
+            },
+            "time": "2021-06-23T14:23:25+00:00"
+        }
+    ],
+    "packages-dev": [],
+    "aliases": [],
+    "minimum-stability": "stable",
+    "stability-flags": {
+        "dvdmarchetti/phpbarcode": 20
+    },
+    "prefer-stable": false,
+    "prefer-lowest": false,
+    "platform": [],
+    "platform-dev": [],
+    "plugin-api-version": "2.1.0"
+}

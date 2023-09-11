@@ -1,0 +1,6 @@
+{
+    "require": {
+        "dvdmarchetti/phpbarcode": "dev-master",
+        "oshomo/csv-utils": "^6.0"
+    }
+}

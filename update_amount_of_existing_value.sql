@@ -1,0 +1,1 @@
+SELECT * FROM tb_inventory_adjustment WHERE sku_code = 9010000006

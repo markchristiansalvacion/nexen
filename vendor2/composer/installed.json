@@ -1,0 +1,144 @@
+{
+    "packages": [
+        {
+            "name": "dvdmarchetti/phpbarcode",
+            "version": "dev-master",
+            "version_normalized": "dev-master",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/dvdmarchetti/php-barcode-generator.git",
+                "reference": "113c6b6aea04121435151a39b289f8a889ea5b08"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/dvdmarchetti/php-barcode-generator/zipball/113c6b6aea04121435151a39b289f8a889ea5b08",
+                "reference": "113c6b6aea04121435151a39b289f8a889ea5b08",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.3.2"
+            },
+            "time": "2020-05-08T21:09:25+00:00",
+            "default-branch": true,
+            "type": "library",
+            "installation-source": "dist",
+            "autoload": {
+                "psr-4": {
+                    "PHPBarcode\\": "src/PHPBarcode/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Davide Marchetti",
+                    "email": "dvdmarchetti663@gmail.com",
+                    "role": "Developer"
+                }
+            ],
+            "description": "Barcodes in PHP made easy",
+            "keywords": [
+                "barcode",
+                "generator"
+            ],
+            "support": {
+                "issues": "https://github.com/dvdmarchetti/PHP-Barcode-Generator/issues",
+                "source": "https://github.com/dvdmarchetti/PHP-Barcode-Generator/tree/master"
+            },
+            "install-path": "../dvdmarchetti/phpbarcode"
+        },
+        {
+            "name": "picqer/php-barcode-generator",
+            "version": "v2.2.0",
+            "version_normalized": "2.2.0.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/picqer/php-barcode-generator.git",
+                "reference": "7df93b40099e5fefad055543320a36b80dccda05"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/picqer/php-barcode-generator/zipball/7df93b40099e5fefad055543320a36b80dccda05",
+                "reference": "7df93b40099e5fefad055543320a36b80dccda05",
+                "shasum": ""
+            },
+            "require": {
+                "ext-mbstring": "*",
+                "php": "^7.3|^8.0"
+            },
+            "require-dev": {
+                "phpunit/phpunit": "^9.5"
+            },
+            "suggest": {
+                "ext-bcmath": "Barcode IMB (Intelligent Mail Barcode) needs bcmath extension",
+                "ext-gd": "For JPG and PNG generators, GD or Imagick is required",
+                "ext-imagick": "For JPG and PNG generators, GD or Imagick is required"
+            },
+            "time": "2021-03-27T09:06:22+00:00",
+            "type": "library",
+            "installation-source": "dist",
+            "autoload": {
+                "psr-4": {
+                    "Picqer\\Barcode\\": "src"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "LGPL-3.0-or-later"
+            ],
+            "authors": [
+                {
+                    "name": "Nicola Asuni",
+                    "email": "info@tecnick.com",
+                    "homepage": "http://nicolaasuni.tecnick.com"
+                },
+                {
+                    "name": "Casper Bakker",
+                    "email": "info@picqer.com",
+                    "homepage": "https://picqer.com"
+                }
+            ],
+            "description": "An easy to use, non-bloated, barcode generator in PHP. Creates SVG, PNG, JPG and HTML images from the most used 1D barcode standards.",
+            "homepage": "https://github.com/picqer/php-barcode-generator",
+            "keywords": [
+                "CODABAR",
+                "Code11",
+                "Code93",
+                "EAN13",
+                "KIX",
+                "KIXCODE",
+                "MSI",
+                "POSTNET",
+                "Pharma",
+                "Standard 2 of 5",
+                "barcode",
+                "barcode generator",
+                "code128",
+                "code39",
+                "ean",
+                "html",
+                "jpeg",
+                "jpg",
+                "php",
+                "png",
+                "svg",
+                "upc"
+            ],
+            "support": {
+                "issues": "https://github.com/picqer/php-barcode-generator/issues",
+                "source": "https://github.com/picqer/php-barcode-generator/tree/v2.2.0"
+            },
+            "funding": [
+                {
+                    "url": "https://github.com/casperbakker",
+                    "type": "github"
+                }
+            ],
+            "install-path": "../picqer/php-barcode-generator"
+        }
+    ],
+    "dev": true,
+    "dev-package-names": []
+}

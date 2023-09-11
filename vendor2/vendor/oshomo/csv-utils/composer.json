@@ -1,0 +1,50 @@
+{
+  "name": "oshomo/csv-utils",
+  "description": "A CSV utility to read, validate and write data to multiple format including JSON, XML etc.",
+  "keywords": ["library", "csv-validator", "php", "php-csv-validator", "csv-converter", "csv-reading", "csv-json-converter", "csv-xml-converter"],
+  "license": "Apache-2.0",
+  "type": "library",
+  "authors": [
+    {
+      "name": "Oshomo Oforomeh",
+      "email": "oshomo.oforomeh2010@gmail.com"
+    }
+  ],
+  "minimum-stability": "dev",
+  "require": {
+    "php": ">7.1.3",
+    "ext-mbstring": "*",
+    "ext-json": "*",
+    "ext-simplexml": "*",
+    "ext-dom": "*"
+  },
+  "require-dev": {
+    "phpunit/phpunit": "^5.7 || ^6.5 || ^7.0 || ^8.0",
+    "friendsofphp/php-cs-fixer": "^2.19 || ^3.0"
+  },
+  "autoload": {
+    "psr-4": {
+      "Oshomo\\CsvUtils\\": "src/"
+    }
+  },
+  "autoload-dev": {
+    "psr-4": {
+      "Oshomo\\CsvUtils\\Tests\\": "tests/"
+    }
+  },
+  "scripts": {
+    "phpunit": "phpunit",
+    "php-cs-fixer-check": "php-cs-fixer fix --config=.php-cs-fixer.dist.php -v --dry-run --stop-on-violation --using-cache=no",
+    "php-cs-fixer": "php-cs-fixer fix --config=.php-cs-fixer.dist.php -v --using-cache=no",
+    "fix-lint": [
+      "@php-cs-fixer"
+    ],
+    "test-setup": [
+      "php -v",
+      "@php-cs-fixer-check"
+    ],
+    "test": [
+      "@phpunit"
+    ]
+  }
+}
