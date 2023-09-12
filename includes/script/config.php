@@ -20,7 +20,7 @@
 	define('DB_HOST', 'localhost');          // Set database host
 	define('DB_USER', 'root');               // Set database user
 	define('DB_PASS', '');                   // Set database password
-	define('DB_NAME', 'siri_mdc_db2');        // Set database name
+	define('DB_NAME', 'local_nexen');        // Set database name
 }
 
 
