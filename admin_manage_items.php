@@ -38,7 +38,7 @@ if (is_login_auth()) {
 <?php include 'views/top_bar.php'; ?>
 <?php
 
-$all_items = $db->query('SELECT * FROM tb_items ORDER BY sap_code DESC')->fetch_all();
+$all_items = $db->query('SELECT * FROM tb_items ORDER BY id DESC')->fetch_all();
 
 ?>
 
@@ -98,40 +98,38 @@ $all_items = $db->query('SELECT * FROM tb_items ORDER BY sap_code DESC')->fetch_
                     <!-- <table class="table table-bordered table-responsive-sm display" id="view_asn_table"> -->
                     <thead>
                       <tr>
-                        <th class="align-middle text-center  font-weight-bold ">Mat. Code</th>
+                        <th class="align-middle text-center  font-weight-bold ">SKU</th>
                         <th class="align-middle text-center  font-weight-bold ">Mat. Desc.</th>
                         <th class="align-middle text-center  font-weight-bold ">Category</th>
                         <th class="align-middle text-center  font-weight-bold ">Size</th>
-                        <th class="align-middle text-center  font-weight-bold ">Shelf Life</th>
+                        <th class="align-middle text-center  font-weight-bold ">Manufacturer</th>
                          <!-- <th class="align-middle text-center  font-weight-bold ">Weight Per Box</th> -->
                         <!-- <th class="align-middle text-center  font-weight-bold ">CBM Per Box</th> -->
-                        <th class="align-middle text-center  font-weight-bold ">Pack Size</th>
-                        <th class="align-middle text-center  font-weight-bold ">Case Per Tier</th>
-                        <th class="align-middle text-center  font-weight-bold ">Stacking Height</th>
-                        <th class="align-middle text-center  font-weight-bold ">Top Load</th>
-                        <th class="align-middle text-center  font-weight-bold ">Case Per Pallet</th>
-                        <th class="align-middle text-center  font-weight-bold ">Action</th>
+                        <th class="align-middle text-center  font-weight-bold ">Load Index</th>
+                        <th class="align-middle text-center  font-weight-bold ">Speed Rating</th>
+                        <th class="align-middle text-center  font-weight-bold ">Ply Rating</th>
+                        <th class="align-middle text-center  font-weight-bold ">Origin</th>
+                        <!-- <th class="align-middle text-center  font-weight-bold ">Action</th> -->
                       </tr>
                     </thead>
                     <tbody>
                       <?php foreach ($all_items as $arr_key => $arr_val) { ?>
                         <tr>
-                          <td class="align-middle text-center"><?php echo $arr_val['sap_code']; ?></td>
+                          <td class="align-middle text-center"><?php echo $arr_val['sku_code']; ?></td>
                           <td class="align-middle text-center"><?php echo $arr_val['material_description']; ?></td>
                           <td class="align-middle text-center"><?php echo $arr_val['category']; ?></td>
-                          <td class="align-middle text-center"><?php echo $arr_val['size']; ?></td>
-                          <td class="align-middle text-center"><?php echo $arr_val['shelf_life']; ?></td>
-                          <td class="align-middle text-center"><?php echo $arr_val['pack_size']; ?></td>
-                          <td class="align-middle text-center"><?php echo $arr_val['case_per_tier']; ?></td>
-                          <td class="align-middle text-center"><?php echo $arr_val['layer']; ?></td>
-                          <td class="align-middle text-center"><?php echo $arr_val['top_load']; ?></td>
-                          <td class="align-middle text-center"><?php echo $arr_val['case_per_pallet']; ?></td>
-                          <td>
-                            <div class="d-flex">
-                              <a data-toggle="modal" data-target="#update_details<?php echo $arr_val['id']; ?>" class="btn btn-info shadow btn-xs sharp" title="Update"><i class="fa-solid fa-pen-to-square"></i></a>
+                          <td class="align-middle text-center"><?php echo $arr_val['tire_size']; ?></td>
+                          <td class="align-middle text-center"><?php echo $arr_val['manufacturer']; ?></td>
+                          <td class="align-middle text-center"><?php echo $arr_val['load_index']; ?></td>
+                          <td class="align-middle text-center"><?php echo $arr_val['speed_rating']; ?></td>
+                          <td class="align-middle text-center"><?php echo $arr_val['ply_rating']; ?></td>
+                          <td class="align-middle text-center"><?php echo $arr_val['origin']; ?></td>
+                          <!-- <td> -->
+                            <!-- <div class="d-flex"> -->
+                              <!-- <a data-toggle="modal" data-target="#update_details<?php echo $arr_val['id']; ?>" class="btn btn-info shadow btn-xs sharp" title="Update"><i class="fa-solid fa-pen-to-square"></i></a> -->
                               <!-- <a target="_blank" href="<?php echo "print_put_away_form?document_no={$arr_det['document_no']}";?>" class="btn btn-success shadow btn-xs sharp me-1" title="Print Putaway Form"><i class="fa-solid fa-print"></i></a> -->
-                            </div>												
-												  </td>
+                            <!-- </div>												 -->
+												  <!-- </td> -->
                           <!-- <td>
                             <div class="dropdown">
                               <button type="button" class="btn btn-success light sharp" data-bs-toggle="dropdown">

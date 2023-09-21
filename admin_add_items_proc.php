@@ -3,9 +3,9 @@ require_once 'includes/load.php';
 require_once 'vendor2/autoload.php';
 
 if (isset($_POST)) {
-  //print_r_html($_POST);
+  // print_r_html($_POST);
   if (
-    empty(trim($_POST['item_category'])) || empty(trim($_POST['item_code'])) || empty(trim($_POST['item_name']))  || empty(trim($_POST['p_size'])) || empty(trim($_POST['w_box'])) || empty(trim($_POST['cbm'])) || empty(trim($_POST['c_pallet'])) || empty(trim($_POST['p_pallet'])) || empty(trim($_POST['c_tier'])) || empty(trim($_POST['layer']) || empty(trim($_POST['s_life'])))
+    empty(trim($_POST['item_code'])) || empty(trim($_POST['item_name'])) || empty(trim($_POST['item_category']))  || empty(trim($_POST['unit'])) || empty(trim($_POST['manufacturer'])) || empty(trim($_POST['dot'])) || empty(trim($_POST['tire_brand'])) || empty(trim($_POST['tire_size'])) || empty(trim($_POST['tire_design'])) || empty(trim($_POST['rim_size']) || empty(trim($_POST['load_index'])) || empty(trim($_POST['load_index'])) || empty(trim($_POST['speed_rating'])) || empty(trim($_POST['ply_rating'])) || empty(trim($_POST['origin'])) || empty(trim($_POST['regulation'])) || empty(trim($_POST['cif'])) || empty(trim($_POST['type'])))
   ) {
 
     $_SESSION['msg_heading'] = "Transaction Error!";
@@ -13,22 +13,27 @@ if (isset($_POST)) {
     $_SESSION['msg_type'] = "danger";
     redirect("admin_add_items");
   } else {
-    $item_category = remove_junk($_POST['item_category']);
-    $ptr_no = remove_junk($_POST['item_code']);
+    $item_code = remove_junk($_POST['item_code']);
     $item_name = remove_junk($_POST['item_name']);
+    $item_category = remove_junk($_POST['item_category']);
+    $unit = remove_junk($_POST['unit']);
+    $manufacturer = remove_junk($_POST['manufacturer']);
+    $dot = remove_junk($_POST['dot']);
+    $tire_brand = remove_junk($_POST['tire_brand']);
+    $tire_size = remove_junk($_POST['tire_size']);
+    $tire_design = remove_junk($_POST['tire_design']);
+    $rim_size = remove_junk($_POST['rim_size']);
+    $load_index = remove_junk($_POST['load_index']);
+    $speed_rating = remove_junk($_POST['speed_rating']);
+    $ply_rating = remove_junk($_POST['ply_rating']);
+    $origin = remove_junk($_POST['origin']);
+    $regulation = remove_junk($_POST['regulation']);
+    $cif = remove_junk($_POST['cif']);
+    $type = remove_junk($_POST['type']);
+    $created_by = $_SESSION['name'];
+    
 
-    $p_size = remove_junk($_POST['p_size']);
-    $w_box = remove_junk($_POST['w_box']);
-    $cbm = remove_junk($_POST['cbm']);
-
-    $c_pallet = remove_junk($_POST['c_pallet']);
-    $p_pallet = remove_junk($_POST['p_pallet']);
-    $c_tier = remove_junk($_POST['c_tier']);
-    $layer = remove_junk($_POST['layer']);
-    $s_life = $_POST['s_life'];
-
-    $sql = "INSERT INTO tb_items (`item_code`, `material_description`,  `category_code`, `pack_size`, `weight_per_box`, `cbm_per_box`,`case_per_pallet`,`pcs_per_pallet`, `case_per_tier`, `layer_high`,`shelf_life`)
-        VALUES('$ptr_no','$item_name','$item_category','$p_size','$w_box','$cbm','$c_pallet','$p_pallet','$c_tier','$layer','$s_life')";
+    $sql = "INSERT INTO tb_items (`sku_code`, `material_description`,  `category`, `unit`, `manufacturer`, `dot`,`tire_brand`,`tire_size`, `tire_design`, `rim_size`,`load_index`, `speed_rating`, `ply_rating`, `origin`, `regulation`, `cif`, `type`,`created_by`) VALUES('$item_code','$item_name','$item_category','$unit','$manufacturer','$dot','$tire_brand','$tire_size','$tire_design','$rim_size','$load_index','$speed_rating','$ply_rating','$origin','$regulation','$cif','$type','$created_by')";
 
     if ($db->query($sql)) {
       $_SESSION['msg_heading'] = "Success!";

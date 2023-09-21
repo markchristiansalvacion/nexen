@@ -5,8 +5,6 @@ require_once 'includes/load.php';
  * Check each script if login is authenticated or if session is already expired
  */
 
-
-
 // either new or old, it should live at most for another hour
 
 if (is_login_auth()) {
@@ -63,7 +61,6 @@ $all_category = $db->query('SELECT * FROM tb_category')->fetch_all();
       </script>
 
     <?php
-
       unset($_SESSION['msg']);
       unset($_SESSION['msg_type']);
       unset($_SESSION['msg_heading']);
@@ -102,115 +99,147 @@ $all_category = $db->query('SELECT * FROM tb_category')->fetch_all();
                 <div class="form-validation">
                   <form action="admin_add_items_proc" method="post" class="needs-validation" novalidate>
                     <div class="row">
-                      <div class="col-xl-6">
+                      <div class="col-lg-12">
                         <div class="mb-3 row">
+                          <label class="col-lg-4 col-form-label" for="validationCustom02">SKU <span class="text-danger">*</span>
+                          </label>
+                            <div class="col-lg-6">
+                              <input type="text" class="form-control" placeholder="Enter SKU Code" name="item_code" id="item_code" required />
+                            </div>
+                        </div>
+                        <div class="mb-3 row">
+                          <label class="col-lg-4 col-form-label" for="item_name">Item Name <span class="text-danger">*</span>
+                          </label>
+                            <div class="col-lg-6">
+                              <input type="text" class="form-control" placeholder="Enter Item Name" name="item_name" id="item_name" required />
+                            </div>
+                        </div>
+                          <div class="mb-3 row">
                           <label class="col-lg-4 col-form-label" for="validationCustom05">Item Category
                             <span class="text-danger">*</span>
                           </label>
                           <div class="col-lg-6">
                             <select name="item_category" id="item_cat" class="form-control" required>
-                              <option value="">Item Category</option>
-                              <?php foreach ($all_category as $cat_arr_id => $cat_arr_val) { ?>
-                                <option value="<?php echo $cat_arr_val['category_description']; ?>"><?php echo $cat_arr_val['category_code'] . " - " . $cat_arr_val['category_description']; ?></option>
-                              <?php } ?>
+                              <option value="">Select Category</option>
+                              <option value="passenger">Passenger</option>
+                              <option value="suv">SUV</option>
+                              <option value="light_truck">Light Truck</option>
+                              <option value="high_performance">High Performance</option>
                             </select>
                           </div>
                         </div>
                         <div class="mb-3 row">
-                          <label class="col-lg-4 col-form-label" for="validationCustom02">Item Code <span class="text-danger">*</span>
-                          </label>
-                          <div class="col-lg-6">
-
-                            <input type="text" class="form-control" placeholder="Enter Item Code" name="item_code" id="item_code" required />
-
-                          </div>
-                        </div>
-                        <div class="mb-3 row">
-                          <label class="col-lg-4 col-form-label" for="validationCustom03">Item Description
+                          <label class="col-lg-4 col-form-label" for="unit">Unit
                             <span class="text-danger">*</span>
                           </label>
                           <div class="col-lg-6">
-                            <input type="text" class="form-control" name="item_name" id="item_name" placeholder="Enter Item Name" required>
-
+                            <select name="unit" id="unit" class="form-control" required>
+                              <option value="">Select Unit</option>
+                              <option value="pcs">Pc</option>
+                              <option value="case">Case</option>
+                            </select>
                           </div>
                         </div>
                         <div class="mb-3 row">
-                          <label class="col-lg-4 col-form-label" for="validationCustom03">Pack Size
+                          <label class="col-lg-4 col-form-label" for="manufacturer">Manufacturer <span class="text-danger">*</span>
+                          </label>
+                            <div class="col-lg-6">
+                              <input type="text" class="form-control" placeholder="Enter Manufacturer" name="manufacturer" id="manufacturer" required />
+                            </div>
+                        </div>
+                        <div class="mb-3 row">
+                          <label class="col-lg-4 col-form-label" for="dot">DOT<span class="text-danger">*</span>
+                          </label>
+                            <div class="col-lg-6">
+                              <input type="text" class="form-control" placeholder="DOT eg. 2023" name="dot" id="dot" required />
+                            </div>
+                        </div>
+                        <div class="mb-3 row">
+                          <label class="col-lg-4 col-form-label" for="tire_brand">Tire Brand<span class="text-danger">*</span>
+                          </label>
+                            <div class="col-lg-6">
+                              <input type="text" class="form-control" placeholder="Enter Tire Brand" name="tire_brand" id="tire_brand" required />
+                            </div>
+                        </div>
+                        <div class="mb-3 row">
+                          <label class="col-lg-4 col-form-label" for="tire_size">Tire Size<span class="text-danger">*</span>
+                          </label>
+                            <div class="col-lg-6">
+                              <input type="text" class="form-control" placeholder="Enter Tire Size eg. 305/45 R22" name="tire_size" id="tire_size" required />
+                            </div>
+                        </div>
+                        <div class="mb-3 row">
+                          <label class="col-lg-4 col-form-label" for="tire_design">Tire Design<span class="text-danger">*</span>
+                          </label>
+                            <div class="col-lg-6">
+                              <input type="text" class="form-control" placeholder="Enter Tire Design" name="tire_design" id="tire_design" required />
+                            </div>
+                        </div>
+                        <div class="mb-3 row">
+                          <label class="col-lg-4 col-form-label" for="rim_size">Rim Size<span class="text-danger">*</span>
+                          </label>
+                            <div class="col-lg-6">
+                              <input type="number" min="1" step=".1" class="form-control" placeholder="Enter Rim Size" name="rim_size" id="rim_size" required />
+                            </div>
+                        </div>
+                        <div class="mb-3 row">
+                          <label class="col-lg-4 col-form-label" for="load_index">Load Index<span class="text-danger">*</span>
+                          </label>
+                            <div class="col-lg-6">
+                              <input type="number" min="1" step=".1" class="form-control" placeholder="Enter Load Index" name="load_index" id="load_index" required />
+                            </div>
+                        </div>
+                        <div class="mb-3 row">
+                          <label class="col-lg-4 col-form-label" for="speed_rating">Speed Rating<span class="text-danger">*</span>
+                          </label>
+                            <div class="col-lg-6">
+                              <input type="text" class="form-control" placeholder="Enter Speed Rating" name="speed_rating" id="speed_rating" required />
+                            </div>
+                        </div>
+                        <div class="mb-3 row">
+                          <label class="col-lg-4 col-form-label" for="ply_rating">Ply Rating<span class="text-danger">*</span>
+                          </label>
+                            <div class="col-lg-6">
+                              <input type="number" min="1" step=".1" class="form-control" placeholder="Enter Ply Rating" name="ply_rating" id="ply_rating" required />
+                            </div>
+                        </div>
+                        <div class="mb-3 row">
+                          <label class="col-lg-4 col-form-label" for="origin">Origin<span class="text-danger">*</span>
+                          </label>
+                            <div class="col-lg-6">
+                              <input type="text" class="form-control" placeholder="Enter Origin" name="origin" id="origin" required />
+                            </div>
+                        </div>
+                        <div class="mb-3 row">
+                          <label class="col-lg-4 col-form-label" for="regulation">Regulation
                             <span class="text-danger">*</span>
                           </label>
                           <div class="col-lg-6">
-                            <input type="number" class="form-control" name="p_size" id="p_size" placeholder="Enter Pack Size" required>
-
+                            <select name="regulation" id="regulation" class="form-control" required>
+                              <option value="">Regulation Classification</option>
+                              <option value="regulated">Regulated</option>
+                              <option value="non-regulated">Non-Regulated</option>
+                            </select>
                           </div>
                         </div>
                         <div class="mb-3 row">
-                          <label class="col-lg-4 col-form-label" for="validationCustom03">Case Per Tier
-                            
+                          <label class="col-lg-4 col-form-label" for="cif">CIF<span class="text-danger">*</span>
                           </label>
-                          <div class="col-lg-6">
-                            <input type="number" class="form-control" name="c_tier" id="c_tier" placeholder="Enter Case Per Tier" >
-
-                          </div>
-                        </div>
-                      </div>
-                      <div class="col-xl-6">
-                        <div class="mb-3 row">
-                          <label class="col-lg-4 col-form-label" for="validationCustom03">Weight Per Box
-                           
-                          </label>
-                          <div class="col-lg-6">
-                            <input type="number" class="form-control" name="w_box" id="w_box" placeholder="Enter Weight Per Box" >
-
-                          </div>
+                            <div class="col-lg-6">
+                              <input type="number" min="1" step=".1" class="form-control" placeholder="Enter CIF" name="cif" id="cif" required />
+                            </div>
                         </div>
                         <div class="mb-3 row">
-                          <label class="col-lg-4 col-form-label" for="validationCustom05">CBM Per Box
-                            
+                          <label class="col-lg-4 col-form-label" for="type">Type
+                            <span class="text-danger">*</span>
                           </label>
                           <div class="col-lg-6">
-                            <input type="number" class="form-control" placeholder="Enter CBM Per Box" name="cbm" id="cbm"  />
-
-
+                            <select name="type" id="type" class="form-control" required>
+                              <option value="">Select Type</option>
+                              <option value="regulated">Tire</option>
+                            </select>
                           </div>
                         </div>
-                        <div class="mb-3 row">
-                          <label class="col-lg-4 col-form-label" for="validationCustom03">CASE Per Pallet
-                            >
-                          </label>
-                          <div class="col-lg-6">
-                            <input type="number" class="form-control" name="c_pallet" id="c_pallet" placeholder="Enter CASE Per Pallet" >
-
-                          </div>
-                        </div>
-                        <div class="mb-3 row">
-                          <label class="col-lg-4 col-form-label" for="validationCustom03">PCS Per Pallet
-                            
-                          </label>
-                          <div class="col-lg-6">
-                            <input type="number" class="form-control" name="p_pallet" id="p_pallet" placeholder="Enter PCS Per Pallet" >
-
-                          </div>
-                        </div>
-                        <div class="mb-3 row">
-                          <label class="col-lg-4 col-form-label" for="validationCustom03">Stocking High
-                        
-                          </label>
-                          <div class="col-lg-6">
-                            <input type="number" class="form-control" name="layer" id="layer" placeholder="Enter Stocking High" >
-
-                          </div>
-                        </div>
-                        <div class="mb-3 row">
-                          <label class="col-lg-4 col-form-label" for="validationCustom03">Shelf Life
-                            
-                          </label>
-                          <div class="col-lg-6">
-                            <input type="number" class="form-control" name="s_life" id="s_life" placeholder="Enter Shelf Life" >
-
-                          </div>
-                        </div>
-
-
                         <div class="mb-3 row">
                           <div class="col-lg-8 ms-auto">
                             <button type="submit" class="btn btn-primary">Confirm Transaction</button>
