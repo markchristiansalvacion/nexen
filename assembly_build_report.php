@@ -38,7 +38,7 @@ if(!empty($allocated_truck)){
   
     $file = fopen('php://output', 'w');
   
-    $header = array("AB ID","AB Ref No.","ASN ID","ASN Ref No", "Document No.","Material No.","Qty","BBD","Fulfillment Status","Created By","Last Change");
+    $header = array("AB ID","AB Ref No.","ASN ID","ASN Ref No", "Document No.","Material No.","Qty","Serial","Fulfillment Status","Created By","Last Change");
     fputcsv($file, $header);
 
     foreach ($allocated_truck as $asar_key => $row) {

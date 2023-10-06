@@ -13,14 +13,11 @@ if (isset($_GET["export_dir"])) {
       a.sku_code,
       tb_items.material_description,
       SUM(a.qty_case) AS SOH,
-      a.expiry AS exp_date,
-      tb_items.shelf_life,
-      DATEDIFF(a.expiry,CURDATE()) AS days_to_expiry,
-      DATEDIFF(a.expiry,CURDATE())/(tb_items.shelf_life*30) AS shelf_life_percentage
+      a.expiry AS exp_date
       FROM tb_inventory_adjustment a 
-      INNER JOIN tb_items ON tb_items.sap_code = a.sku_code
+      INNER JOIN tb_items ON tb_items.sku_code = a.sku_code
       GROUP BY exp_date,a.sku_code
-      ORDER BY shelf_life_percentage ASC')->fetch_all();
+      ORDER BY SOH ASC')->fetch_all();
 
       if(!empty($db_inventory_report)){
         $file_name = 'Daily Inventory Report '.$date_today.'.csv';
@@ -30,7 +27,7 @@ if (isset($_GET["export_dir"])) {
       
         $file = fopen('php://output', 'w');
       
-        $header = array("SKU Code",  "Material Description",  "SOH", "BBD", "Remaining Shelf Life", "Shelf Life %");
+        $header = array("SKU Code",  "Material Description",  "SOH", "Serial");
       
         fputcsv($file, $header);
       
@@ -42,8 +39,6 @@ if (isset($_GET["export_dir"])) {
           $data[] = $asar_det["material_description"];
           $data[] = number_format($asar_det["SOH"]);
           $data[] = $asar_det["exp_date"];
-          $data[] = number_format($asar_det["days_to_expiry"]);
-          $data[] = $asar_det['shelf_life_percentage'];
           fputcsv($file, $data);
         }
     

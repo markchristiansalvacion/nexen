@@ -23,12 +23,11 @@ $db_pallet = $db->query('SELECT
   a.bin_loc,
   a.putaway_status,
   tb_items.material_description,
-  tb_items.weight_per_case,
   tb_asn.last_updated,
   tb_assembly_build.document_no
   FROM tb_inventory_adjustment a
   INNER JOIN tb_assembly_build ON tb_assembly_build.id = a.ab_id 
-  INNER JOIN tb_items on tb_items.sap_code = a.sku_code
+  INNER JOIN tb_items on tb_items.sku_code = a.sku_code
   INNER JOIN tb_asn ON tb_asn.id = tb_assembly_build.asn_id
   WHERE tb_assembly_build.document_no = ?', $_GET['document_no'])->fetch_all();
 
@@ -85,18 +84,18 @@ foreach($db_pallet as $db_key => $arr_val){
   $tb_info_date = new easyTable($pdf, '{100,20}');
   $tb_info_date->rowStyle('font-size:10; valign:B; border:LR;font-color:black; ');
 
-  $tb_info_date->easycell('BBD', 'align:L;colspan:2;font-color:black;');
+  $tb_info_date->easycell('Serial', 'align:L;colspan:2;font-color:black;');
 
   $tb_info_date->printRow();
   $tb_info_date->rowStyle('font-size:30; valign:M; border:LRB;font-color:black; ');
 
-  $tb_info_date->easycell(date('M-d-Y', strtotime($arr_val['expiry'])), 'align:C;font-style:B;paddingY:3;colspan:2;font-color:black;');
+  $tb_info_date->easycell($arr_val['expiry'], 'align:C;font-style:B;paddingY:3;colspan:2;font-color:black;');
   $tb_info_date->printRow();
   $tb_info_date->endTable(0);
 
   $tb_last_info = new easyTable($pdf, '{74.25,74.25}');
   $tb_last_info->rowStyle('font-size:10; valign:L; border:LRTB;font-color:black;');
-  $tb_last_info->easycell('TOTAL CASES', 'align:C;font-color:black;');
+  $tb_last_info->easycell('QTY (PC)', 'align:C;font-color:black;');
   $tb_last_info->easycell('DOCUMENT NO', 'align:C; colspan:2;font-color:black;');
   $tb_last_info->printRow();
   $tb_last_info->rowStyle('font-size:12; font-style:B; valign:L; border:LRTB;font-color:black;');

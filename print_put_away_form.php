@@ -26,12 +26,11 @@ $db_for_putaway = $db->query('SELECT
   a.bin_loc,
   a.putaway_status,
   tb_items.material_description,
-  tb_items.weight_per_case,
   tb_asn.last_updated,
   tb_assembly_build.document_no
   FROM tb_inventory_adjustment a
   INNER JOIN tb_assembly_build ON tb_assembly_build.id = a.ab_id 
-  INNER JOIN tb_items on tb_items.sap_code = a.sku_code
+  INNER JOIN tb_items on tb_items.sku_code = a.sku_code
   INNER JOIN tb_asn ON tb_asn.id = tb_assembly_build.asn_id
   WHERE tb_assembly_build.document_no = ? AND a.transaction_type = ?', $_GET['document_no'],"INB")->fetch_all();
 
@@ -188,7 +187,7 @@ $db_for_putaway = $db->query('SELECT
   $tb_body->easyCell('Material Description','valign:T;align:C');
   $tb_body->easyCell('UoM','valign:T;align:C');
   $tb_body->easyCell('Qty','valign:T;align:C');
-  $tb_body->easyCell('BBD','valign:T; align:C');
+  $tb_body->easyCell('Serial','valign:T; align:C');
   $tb_body->easyCell('Location','valign:T; align:C');
   $tb_body->easyCell('LPN','valign:T; align:C');
   $tb_body->printRow();
@@ -199,7 +198,7 @@ $db_for_putaway = $db->query('SELECT
     $tb_body->rowStyle('font-size:8; paddingY:2');
     $tb_body->easyCell($pallet_count,'valign:M; align:C');
     $tb_body->easyCell($asar_val['sku_code'].'-'.$asar_val['material_description'],'valign:M;align:C');
-    $tb_body->easyCell('Case','valign:M; align:C');
+    $tb_body->easyCell('Pc','valign:M; align:C');
     $tb_body->easyCell(number_format($asar_val['qty_case'],2,'.'),'valign:M;align:C');
     $tb_body->easyCell($asar_val['expiry'],'valign:M; align:C;');
     $tb_body->easyCell('______________','valign:M; align:C');

@@ -12,9 +12,19 @@ if (isset($_POST["export"])) {
   header("Content-Disposition: attachment; filename=$file_name");
   header("Content-Type: text/csv;");
 
+  
+  $lines = array (
+    array('ETA (yyyy-mm-dd)','DR/Doc. No.','Source', 'Forwarder', 'Truck Type','Driver', 'Plate No.', 'SKU Code', 'Qty (PCS)', 'Remarks'),
+    array("2023-10-03","DRSample-001","China", "Arrowgo","20'" ,"Mr. P", "ZXC123", "112233", "10", "Sample Only Can Delete Before Upload"),
+  );
+
+
   $file = fopen('php://output', 'w');
 
-  $header = array("Transaction Type", "Pull Out Request No.", "Date Requested (yyyy-mm-dd)", "Pull Out Date (yyyy-mm-dd)", "ETA (yyyy-mm-dd)", "Source Code",  "Destination Code", "Forwarder Code", "Driver", "Plate No.", "SKU Code", "Qty (Case)", "STO No.", "Remarks");
+  foreach($lines as $fields){
+    fputcsv($file, $fields);
+  }
+ 
+  fclose($file);
 
-  fputcsv($file, $header);
 }

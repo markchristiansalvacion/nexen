@@ -104,7 +104,7 @@ if (is_login_auth()) {
             tb_assembly_build.document_no
             FROM tb_inventory_adjustment a
             INNER JOIN tb_assembly_build ON tb_assembly_build.id = a.ab_id 
-            INNER JOIN tb_items on tb_items.sap_code = a.sku_code
+            INNER JOIN tb_items on tb_items.sku_code = a.sku_code
             INNER JOIN tb_asn ON tb_asn.id = tb_assembly_build.asn_id
             WHERE a.putaway_status = "Pending"
             AND a.transaction_type = "INB"

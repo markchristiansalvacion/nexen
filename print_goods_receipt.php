@@ -19,17 +19,9 @@ require 'vendor2/autoload.php'; // Barcode Generator
   a.id,
   a.ref_no,
   a.uploading_file_name,
-  a.transaction_type,
-  a.pull_out_request_no,
-  a.pull_out_date,
   a.ata,
   a.last_updated AS date_received,
-  tb_source.source_name,
-  tb_warehouse.warehouse_name,
-  tb_warehouse.warehouse_address,
-  tb_source.address,
   a.source_code,
-  a.destination_code,
   a.forwarder,
   a.truck_type,
   a.driver,
@@ -48,14 +40,11 @@ require 'vendor2/autoload.php'; // Barcode Generator
   tb_items.material_description,
   a.remarks
   FROM tb_asn a
-  INNER JOIN tb_source ON tb_source.source_code = a.source_code 
   INNER JOIN tb_assembly_build ON tb_assembly_build.asn_id = a.id
-  INNER JOIN tb_items on tb_items.sap_code = tb_assembly_build.sku_code
-  INNER JOIN tb_warehouse ON tb_warehouse.warehouse_id = a.destination_code
+  INNER JOIN tb_items on tb_items.sku_code = tb_assembly_build.sku_code
   WHERE a.document_no = ?', $_GET['doc_no'])->fetch_all();
 
-
-  //print_r_html($db_asn);
+  // print_r_html($db_asn);
   $ab_ref_no = "";
   $pull_out_date = "";
   $ata = "";
@@ -64,11 +53,8 @@ require 'vendor2/autoload.php'; // Barcode Generator
   $plate_no = "";
   $source_code ="";
   $document_no = "";
-  $source_name = "";
-  $source_address = "";
-  $destination_code = "";
-  $warehouse_name = "";
-  $warehouse_address = "";
+  $warehouse_name = "Arrowgo-Logistics Inc.";
+  $warehouse_address = "Canduman, Mandaue City, Cebu";
   $time_arrived = "";
   $unloading_start = "";
   $unloading_end = "";
@@ -78,18 +64,12 @@ require 'vendor2/autoload.php'; // Barcode Generator
   foreach($db_asn as $asar_key =>$asar_val){
     //print_r_html($asar_val);
     $ab_ref_no = $asar_val['ab_ref_no'];
-    $pull_out_date = $asar_val['pull_out_date'];
     $ata = $asar_val['ata'];
     $forwarder = $asar_val['forwarder'];
     $driver = $asar_val['driver'];
     $plate_no = $asar_val['plate_no'];
     $source_code = $asar_val['source_code'];
     $document_no = $asar_val['document_no'];
-    $source_name = $asar_val['source_name'];
-    $source_address = $asar_val['address'];
-    $destination_code = $asar_val['destination_code'];
-    $warehouse_name = $asar_val['warehouse_name'];
-    $warehouse_address = $asar_val['warehouse_address'];
     $time_arrived = $asar_val['time_arrived'];
     $unloading_start = $asar_val['unloading_start'];
     $unloading_end = $asar_val['unloading_end'];
@@ -119,7 +99,7 @@ require 'vendor2/autoload.php'; // Barcode Generator
 
   $tb_header=new easyTable($pdf, 3);
   $tb_header->rowStyle('border:0');
-  $tb_header->easyCell('', 'img:img/pepsi_logo.png, w15; align:C; valign:M ;rowspan:3');
+  $tb_header->easyCell('', 'img:img/agl_logo.png, w35; align:C; valign:M ;rowspan:3');
   $tb_header->easyCell('Arrowgo-Logistics Inc.', 'font-size:10; font-style:BI; align:C; valign:B');
   $tb_header->easyCell('', ' align:C; valign:M ;rowspan:3');
   $tb_header->printRow();
@@ -151,7 +131,7 @@ require 'vendor2/autoload.php'; // Barcode Generator
   $tb_details->easyCell('');
   $tb_details->easyCell('PGR-'.$ab_ref_no,'valign:T');
   $tb_details->easyCell($document_no,'valign:T');
-  $tb_details->easyCell($pull_out_date,'valign:T');
+  $tb_details->easyCell("",'valign:T');
   $tb_details->easyCell($ata,'valign:T');
   $tb_details->easyCell($forwarder,'valign:T');
   $tb_details->easyCell($driver,'valign:T');
@@ -167,12 +147,12 @@ require 'vendor2/autoload.php'; // Barcode Generator
 
 
   $tb_details_2->rowStyle('font-size:7');
-  $tb_details_2->easyCell($source_code.' - '.$source_name,'valign:M');
+  $tb_details_2->easyCell($source_code,'valign:M');
   $tb_details_2->easyCell('Arrival: '.date('h:i:s A',strtotime($time_arrived)).' / Unloading Start: '.date('h:i:s A',strtotime($unloading_start)).' / Unloading End: '.date('h:i:s A',strtotime($unloading_end)).' / Bay: '.$bay_location,'valign:T; rowspan:2');
   $tb_details_2->printRow();
 
   $tb_details_2->rowStyle('font-size:7');
-  $tb_details_2->easyCell($source_address,'valign:M');
+  $tb_details_2->easyCell("",'valign:M');
   $tb_details_2->printRow();
 
   $tb_details_2->rowStyle('font-size:8');
@@ -192,7 +172,7 @@ require 'vendor2/autoload.php'; // Barcode Generator
   $tb_details_2->printRow();
 
   $tb_details_2->rowStyle('font-size:7');
-  $tb_details_2->easyCell($destination_code.' - '.$warehouse_name,'valign:M');
+  $tb_details_2->easyCell($warehouse_name,'valign:M');
   $tb_details_2->easyCell('3. Arrowgo shall secure a signed copy of the document and issue the same to the forwarder.','valign:M');
   $tb_details_2->printRow();
 
@@ -248,7 +228,7 @@ require 'vendor2/autoload.php'; // Barcode Generator
   $tb_body->easyCell('Material Description','valign:T;align:C');
   $tb_body->easyCell('UoM','valign:T;align:C');
   $tb_body->easyCell('Actual Qty','valign:T;align:C');
-  $tb_body->easyCell('BBD','valign:T; align:C');
+  $tb_body->easyCell('Serial No.','valign:T; align:C');
   $tb_body->easyCell('Remarks','valign:T; align:C');
   $tb_body->printRow();
 
@@ -256,9 +236,9 @@ require 'vendor2/autoload.php'; // Barcode Generator
     $tb_body->rowStyle('font-size:8; paddingY:2');
     $tb_body->easyCell($db_val['sku_code'],'valign:M; align:C');
     $tb_body->easyCell($db_val['material_description'],'valign:M;align:C');
-    $tb_body->easyCell('Case','valign:M; align:C');
+    $tb_body->easyCell('pc','valign:M; align:C');
     $tb_body->easyCell(number_format($db_val['qty_case'],2,'.'),'valign:M;align:C');
-    $tb_body->easyCell(date('d-M-Y',strtotime($db_val['expiry'])),'valign:M; align:C;');
+    $tb_body->easyCell($db_val['expiry'],'valign:M; align:C;');
     $tb_body->easyCell('','valign:M; align:C');
     $tb_body->printRow();
   }

@@ -118,15 +118,15 @@ if (is_login_auth()) {
         a.sku_code,
         tb_items.material_description,
         SUM(a.qty_case - a.allocated_qty) AS SOH,
-        a.expiry AS exp_date,
-        tb_items.shelf_life,
-        DATEDIFF(a.expiry,CURDATE()) AS days_to_expiry,
-        DATEDIFF(a.expiry,CURDATE())/(tb_items.shelf_life*30) AS shelf_life_percentage
+        a.expiry AS exp_date
+        -- tb_items.shelf_life,
+        -- DATEDIFF(a.expiry,CURDATE()) AS days_to_expiry,
+        -- DATEDIFF(a.expiry,CURDATE())/(tb_items.shelf_life*30) AS shelf_life_percentage
         FROM tb_inventory_adjustment a 
-        INNER JOIN tb_items ON tb_items.sap_code = a.sku_code
+        INNER JOIN tb_items ON tb_items.sku_code = a.sku_code
         WHERE a.transaction_type = "INB"
-        GROUP BY exp_date,a.sku_code
-        ORDER BY shelf_life_percentage ASC, SOH ASC')->fetch_all();
+        GROUP BY a.sku_code
+        ORDER BY SOH ASC')->fetch_all();
 
         // print_r_html($db_inventory_report);                  
 
@@ -156,9 +156,7 @@ if (is_login_auth()) {
                         <th class=" text-center  font-weight-bold ">SKU Code</th>
                         <th class=" text-center  font-weight-bold ">Material Description</th>
                         <th class=" text-center  font-weight-bold ">SOH</th>
-                        <th class=" text-center  font-weight-bold ">BBD</th>
-                        <th class=" text-center  font-weight-bold ">Remaining Shelf Life</th>
-                        <th class=" text-center  font-weight-bold ">Shelf Life Percentage</th>
+                        <!-- <th class=" text-center  font-weight-bold ">Serial</th> -->
                       </tr>
                     </thead>
                     <tbody>
@@ -167,9 +165,7 @@ if (is_login_auth()) {
                           <tD class=" text-center"><?php echo $db_det['sku_code']; ?></th>
                           <td class=" text-center"><?php echo $db_det['material_description']; ?></td>
                           <td class=" text-center"><?php echo number_format($db_det['SOH']); ?></td>
-                          <td class=" text-center"><?php echo date('d-M-Y',strtotime($db_det['exp_date'])); ?></td>
-                          <td class=" text-center"><?php echo number_format($db_det['days_to_expiry']); ?></td>
-                          <td class=" text-center"><?php echo $db_det['shelf_life_percentage']*100 .'%'; ?></td>
+                          <!-- <td class=" text-center"><?php echo $db_det['exp_date']; ?></td> -->
                         </tr>
                       <?php } ?>
                     </tbody>

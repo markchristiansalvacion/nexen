@@ -18,17 +18,8 @@ require 'vendor2/autoload.php'; // Barcode Generator
 $db_asn = $db->query('SELECT
 a.id,
 a.ref_no,
-a.transaction_type,
-a.pull_out_request_no,
-a.date_requested,
-a.pull_out_date,
 a.eta,
 a.source_code,
-a.destination_code,
-tb_source.source_name,
-tb_warehouse.warehouse_name,
-tb_warehouse.warehouse_address,
-tb_source.address,
 a.forwarder,
 a.truck_type,
 a.driver,
@@ -40,9 +31,8 @@ a.document_no,
 a.remarks,
 a.date_created
 from tb_asn a
-INNER JOIN tb_source ON tb_source.source_code = a.source_code
-INNER JOIN tb_items ON tb_items.sap_code = a.sku_code
-INNER JOIN tb_warehouse ON tb_warehouse.warehouse_id = a.destination_code WHERE a.id = ? ', $_GET['db_id'])->fetch_array();
+INNER JOIN tb_items ON tb_items.sku_code = a.sku_code
+WHERE a.id = ? ', $_GET['db_id'])->fetch_array();
 
 // print_r_html($db_asn);
 
@@ -98,7 +88,7 @@ $tb_details->rowStyle('border:0;font-size:7');
 $tb_details->easyCell('');
 $tb_details->easyCell('ASN-'.$db_asn['ref_no'],'valign:T');
 $tb_details->easyCell($db_asn['document_no'],'valign:T');
-$tb_details->easyCell($db_asn['pull_out_date'],'valign:T');
+$tb_details->easyCell('N/A','valign:T');
 $tb_details->easyCell($db_asn['eta'],'valign:T');
 $tb_details->easyCell($db_asn['forwarder'],'valign:T');
 $tb_details->easyCell($db_asn['driver'],'valign:T');
@@ -114,12 +104,12 @@ $tb_details_2->printRow();
 
 
 $tb_details_2->rowStyle('font-size:7');
-$tb_details_2->easyCell($db_asn['source_code'].' - '.$db_asn['source_name'],'valign:M');
+$tb_details_2->easyCell($db_asn['source_code'],'valign:M');
 $tb_details_2->easyCell($db_asn['remarks'],'valign:T; rowspan:2');
 $tb_details_2->printRow();
 
 $tb_details_2->rowStyle('font-size:7');
-$tb_details_2->easyCell($db_asn['address'],'valign:M');
+$tb_details_2->easyCell('N/A','valign:M');
 $tb_details_2->printRow();
 
 $tb_details_2->rowStyle('font-size:8');
@@ -139,12 +129,12 @@ $tb_details_2->easyCell('2. Prior Delivery Kindly Prepare PPE, Company ID, Vacci
 $tb_details_2->printRow();
 
 $tb_details_2->rowStyle('font-size:7');
-$tb_details_2->easyCell($db_asn['destination_code'].' - '.$db_asn['warehouse_name'],'valign:M');
+$tb_details_2->easyCell('Arrowgo Cebu','valign:M');
 $tb_details_2->easyCell('3. Submit this form to the Inbound Window for queuing.','valign:M');
 $tb_details_2->printRow();
 
 $tb_details_2->rowStyle('font-size:7');
-$tb_details_2->easyCell($db_asn['warehouse_address'],'valign:M; border:B');
+$tb_details_2->easyCell('','valign:M; border:B');
 $tb_details_2->easyCell('4. After your shipment is received surrender this form and wait for releasing of the Goods Receipt Form.','valign:M; border:B');
 $tb_details_2->printRow();
 $tb_details_2->endTable();
@@ -162,7 +152,7 @@ $tb_body->printRow();
 $tb_body->rowStyle('font-size:8; paddingY:2');
 $tb_body->easyCell($db_asn['sku_code'],'valign:M; align:C');
 $tb_body->easyCell($db_asn['material_description'],'valign:M;align:C');
-$tb_body->easyCell('Case','valign:M; align:C');
+$tb_body->easyCell('Pc','valign:M; align:C');
 $tb_body->easyCell(number_format($db_asn['qty_case'],2,'.'),'valign:M;align:C');
 $tb_body->easyCell('','valign:M; align:C; border:B');
 $tb_body->easyCell('','valign:M; align:C');

@@ -99,19 +99,15 @@ if (is_login_auth()) {
 
         $db_checker = $db->query('SELECT * FROM tb_users where user_type = ?','checker')->fetch_all();
 
-        $db_items = $db->query('SELECT sap_code,material_description FROM tb_items')->fetch_all();
+        $db_items = $db->query('SELECT sku_code,material_description FROM tb_items')->fetch_all();
 
         $db_asn = $db->query('SELECT 
             a.id,
             a.ref_no,
             a.uploading_file_name,
-            a.transaction_type,
-            a.pull_out_request_no,
-            a.date_requested,
-            a.pull_out_date,
             a.eta,
             a.ata,
-            tb_source.source_name,
+            a.source_code,
             a.forwarder,
             a.truck_type,
             a.driver,
@@ -130,8 +126,7 @@ if (is_login_auth()) {
             a.time_departed,
             a.remarks
             FROM tb_asn a
-            INNER JOIN tb_source ON tb_source.source_code = a.source_code 
-            INNER JOIN tb_items on tb_items.sap_code = a.sku_code
+            LEFT JOIN tb_items on tb_items.sku_code = a.sku_code
           WHERE a.eta BETWEEN ? AND ?
           ORDER BY a.eta DESC ', $week_start,$week_end)->fetch_all();
 
@@ -152,49 +147,25 @@ if (is_login_auth()) {
                     <thead>
                       <tr>
                         <th class="align-middle text-center">Action</th>
-                        <!-- <th class="align-middle text-center">Uploading File Name</th> -->
-                        <th class="align-middle text-center">Req. No</th>
-                        <th class="align-middle text-center">PRF No.</th>
-                        <th class="align-middle text-center">TO Ref. No.</th>
-                        <th class="align-middle text-center">SKU</th>
-                        <th class="align-middle text-center">Source</th>
-                        <th class="align-middle text-center">Truck Type</th>
+                        <th class="align-middle text-center">Uploading File Name</th>
+                        <th class="align-middle text-center">PRF</th>
+                        <th class="align-middle text-center">Source Doc.</th>
                         <th class="align-middle text-center">ETA</th>
-                        <th class="align-middle text-center">Bay Allocation</th>
+                        <th class="align-middle text-center">Source</th>
+                        <th class="align-middle text-center">SKU</th>
+                        <th class="align-middle text-center">Truck Type</th>
+                        <th class="align-middle text-center">Receipt Status</th>
                         <th class="align-middle text-center">Action</th>
-                        <th class="align-middle text-center">Goods Receipt</th>
                         <th class="align-middle text-center">Status</th>
-                        
                       </tr>
                     </thead>
                     <tbody>
                       <?php foreach ($db_asn as $arr_key => $arr_det) { ?>
                         <tr>
-
-                        <!-- ACTION ITEMS -->
-                          <!-- <td>
-                            <div class="dropdown ms-auto text-end">
-                              <div class="btn sharp btn-warning tp-btn ms-auto" data-bs-toggle="dropdown">
-                                <svg width="25" height="24" viewBox="0 0 25 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                  <path d="M12.2835 13C12.8354 13 13.2828 12.5523 13.2828 12C13.2828 11.4477 12.8354 11 12.2835 11C11.7316 11 11.2842 11.4477 11.2842 12C11.2842 12.5523 11.7316 13 12.2835 13Z" stroke="#342E59" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                                  <path d="M12.2835 6C12.8354 6 13.2828 5.55228 13.2828 5C13.2828 4.44772 12.8354 4 12.2835 4C11.7316 4 11.2842 4.44772 11.2842 5C11.2842 5.55228 11.7316 6 12.2835 6Z" stroke="#342E59" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                                  <path d="M12.2835 20C12.8354 20 13.2828 19.5523 13.2828 19C13.2828 18.4477 12.8354 18 12.2835 18C11.7316 18 11.2842 18.4477 11.2842 19C11.2842 19.5523 11.7316 20 12.2835 20Z" stroke="#342E59" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                                </svg>
-                              </div>
-                              <div class="dropdown-menu dropdown-menu-end">
-                                <a class="dropdown-item" data-toggle="modal" data-target="#update_details<?php echo $arr_det['id'];?>">View/Update Details</a>
-                                <a class="dropdown-item" target="_blank" href="<?php echo "print_asn_slip?db_id={$arr_det['id']}";?>">Print ASN Slip</a>
-                                <a class="dropdown-item" data-toggle="modal" data-target="#goods_receipt<?php echo $arr_det['id'];?>">Post Goods Receipt</a>
-                                <?php if(!empty($arr_det['actual_qty']) || $arr_det['actual_qty'] != null){ ?>
-                                  <a class="dropdown-item" target="_blank" href="<?php echo "print_goods_receipt?asn_db_id={$arr_det['id']}";?>">Print Goods Receipt</a>
-                                <?php } ?>
-                              </div>
-                            </div>
-                          </td>		 -->
                           <td>
                             <div class="d-flex">
                               <a  data-toggle="modal" data-target="#update_details<?php echo $arr_det['id'];?>" class="btn btn-primary shadow btn-xs sharp me-1" title="View/Update"><i class="fas fa-pencil-alt"></i></a>
-                              <a target="_blank" href="<?php echo "print_asn_slip?db_id={$arr_det['id']}";?>" class="btn btn-warning shadow btn-xs sharp me-1" title="Print ASN"><i class="fa-solid fa-print"></i></a>
+                              <a target="_blank" href="<?php echo "print_asn_slip?db_id={$arr_det['id']}";?>" class="btn btn-warning shadow btn-xs sharp me-1" title="ASN Slip"><i class="fa-solid fa-print"></i></a>
                               <a data-toggle="modal" data-target="#goods_receipt<?php echo $arr_det['id'];?>" class="btn btn-info shadow btn-xs sharp me-1" title="Post Goods"><i class="fa-solid fa-box"></i></a>
                               <?php if(!empty($arr_det['actual_qty']) || $arr_det['actual_qty'] != null){ ?>
                                 <a target="_blank" href="<?php echo "print_goods_receipt?doc_no={$arr_det['document_no']}&asn_id={$arr_det['id']}";?>" class="btn btn-success shadow btn-xs sharp me-1" title="Print Receipt"><i class="fa-solid fa-print"></i></a>
@@ -202,31 +173,20 @@ if (is_login_auth()) {
                               <?php } ?>
                             </div>												
 												  </td>
-                          <!-- <td class="align-middle text-center" ><?php echo $arr_det['uploading_file_name']; ?></td> -->
-                          <td class="align-middle text-center" ><?php echo $arr_det['pull_out_request_no']; ?></td>
+                          <td class="align-middle text-center" ><?php echo $arr_det['uploading_file_name']; ?></td>
                           <td class="align-middle text-center" ><?php echo "PRF-" . $arr_det['ref_no']; ?></td>
                           <td class="align-middle text-center" ><?php echo $arr_det['document_no']; ?></td>
-                          <td class="align-middle text-center" ><?php echo $arr_det['sku_code'].'-'.$arr_det['material_description']; ?></td>
-                          <td class="align-middle text-center "><?php echo $arr_det['source_name']; ?></td>
-                          <td class="align-middle text-center "><?php echo $arr_det['truck_type']; ?></td>
                           <td class="align-middle text-center" ><?php echo $arr_det['eta']; ?></td>
-
-                          <td class="align-middle text-center ">
-                            <?php 
-                              if(empty($arr_det['bay_location'])){
-                                echo "<span class='badge badge-sm light badge-warning'> <i class='fa fa-circle text-warning me-1'></i>Unassigned</span>";
-                              }else{
-                                echo $arr_det['bay_location'];
-                              }
-                            ?>
-                          </td>
-
+                          <td class="align-middle text-center "><?php echo $arr_det['source_code']; ?></td>
+                          <td class="align-middle text-center "><?php echo $arr_det['sku_code']; ?></td>
+                          <td class="align-middle text-center "><?php echo $arr_det['truck_type']; ?></td>
+                          
             
                           <td class = 'align-middle text-center'>
                             <?php
 
                               if (empty($arr_det['actual_qty']) || $arr_det['actual_qty'] == null) {
-                                echo "<span class='badge badge-sm light badge-warning'> <i class='fa fa-circle text-warning me-1'></i>Waiting</span>";
+                                echo "<span class='badge badge-sm light badge-warning'> <i class='fa fa-circle text-warning me-1'></i>Pending</span>";
                               }else{
 
                                 if($arr_det['qty_case'] != $arr_det['actual_qty']){
@@ -441,7 +401,7 @@ if (is_login_auth()) {
                                         <input list="actual_sku" class="form-control" name="actual_sku">
                                         <datalist id="actual_sku">
                                           <?php foreach($db_items as $arr_key => $arr_val){  ?>
-                                            <option value="<?php echo $arr_val['sap_code']; ?>"><?php echo $arr_val['sap_code'].'-'.$arr_val['material_description']; ?></option>
+                                            <option value="<?php echo $arr_val['sku_code']; ?>"><?php echo $arr_val['sku_code'].'-'.$arr_val['material_description']; ?></option>
                                           <?php } ?>
                                         </datalist>
                                       </div>
@@ -526,19 +486,19 @@ if (is_login_auth()) {
                                         <input list="actual_sku" class="form-control" name="actual_sku">
                                         <datalist id="actual_sku">
                                           <?php foreach($db_items as $arr_key => $arr_val){  ?>
-                                            <option value="<?php echo $arr_val['sap_code']; ?>"><?php echo $arr_val['sap_code'].'-'.$arr_val['material_description']; ?></option>
+                                            <option value="<?php echo $arr_val['sku_code']; ?>"><?php echo $arr_val['sku_code'].'-'.$arr_val['material_description']; ?></option>
                                           <?php } ?>
                                         </datalist>
                                       </div>
 
                                       <div class="mt-1">
-                                        <label for="actual_qty" class="form-control-label text-uppercase text-primary font-weight-bold">Actual Received Quantity (Cases)</label>
+                                        <label for="actual_qty" class="form-control-label text-uppercase text-primary font-weight-bold">Actual Received Quantity (Pc)</label>
                                         <input type="number" step="1" class="form-control" id="actual_qty" name="actual_qty">
                                       </div>
 
                                       <div class="mt-1">
-                                        <label for="expiration_date" class="form-control-label text-uppercase text-primary font-weight-bold">Expiration Date/Best Before Date (BBD)</label>
-                                        <input type="date" class="form-control" id="expiration_date" name="expiration_date">
+                                        <label for="expiration_date" class="form-control-label text-uppercase text-primary font-weight-bold">Serial No.</label>
+                                        <input type="text" class="form-control" id="serial_no" name="serial_no">
                                       </div>
 
                                     <div class="modal-footer">

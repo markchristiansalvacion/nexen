@@ -92,7 +92,7 @@ if (is_login_auth()) {
       <div class="container-fluid">
       <?php
 
-        $db_items = $db->query('SELECT sap_code,material_description FROM tb_items')->fetch_all();
+        $db_items = $db->query('SELECT sku_code,material_description FROM tb_items')->fetch_all();
   
         $get_ab = $db->query('SELECT 
                               tb_assembly_build.id,
@@ -108,7 +108,7 @@ if (is_login_auth()) {
                               tb_asn.ata
                               FROM tb_assembly_build 
                               INNER JOIN tb_asn ON tb_asn.id = tb_assembly_build.asn_id
-                              INNER JOIN tb_items ON tb_items.sap_code = tb_assembly_build.sku_code
+                              INNER JOIN tb_items ON tb_items.sku_code = tb_assembly_build.sku_code
                               WHERE fulfillment_status = ?', "Pending")->fetch_all();
 
         //print_r_html($get_ab);
@@ -136,7 +136,7 @@ if (is_login_auth()) {
                         <th class="align-middle text-center ">Date Received</th>
                         <th class="align-middle text-center ">Material Description</th>
                         <th class="align-middle text-center ">Qty Received</th>
-                        <th class="align-middle text-center ">BBD</th>
+                        <th class="align-middle text-center ">Serial No.</th>
                         <th class="align-middle text-center ">Status</th>
                       </tr>
                     </thead>
@@ -170,7 +170,7 @@ if (is_login_auth()) {
                           <td class="align-middle text-center "><?php echo $arr_val['ata']; ?></td>
                           <td class="align-middle text-center "><?php echo $arr_val['sku_code'].'-'.$arr_val['material_description']; ?></td>
                           <td class="align-middle text-center "><?php echo number_format($arr_val['qty_case'],2,".",","); ?></td>
-                          <td class="align-middle text-center "><?php echo date('d-M-Y',strtotime($arr_val['expiry'])); ?></td>
+                          <td class="align-middle text-center "><?php echo $arr_val['expiry']; ?></td>
                           <td class="align-middle text-center" ><?php echo "<span class='badge badge-sm light badge-warning'> <i class='fa fa-circle text-warning me-1'></i>{$arr_val['fulfillment_status']}</span>"; ?></td>
 
                         <!-- MODAL FOR UPDATE ASN DETAILS-->
@@ -229,14 +229,14 @@ if (is_login_auth()) {
 
                                       <!-- Qty -->
                                       <div class="mt-1">
-                                        <label for="qty_case" class="form-control-label text-uppercase text-primary font-weight-bold">Actual Received Quantity (Cases)</label>
+                                        <label for="qty_case" class="form-control-label text-uppercase text-primary font-weight-bold">Actual Received Quantity (Pc)</label>
                                         <input type="number" step="1" class="form-control" id="qty_case" value="<?php echo $arr_val['qty_case']?>" disabled>
                                       </div>
 
                                       <!-- Expiration Date -->
                                       <div class="mt-1">
-                                        <label for="expiration_date" class="form-control-label text-uppercase text-primary font-weight-bold">Expiration Date/Best Before Date (BBD)</label>
-                                        <input type="date" class="form-control" id="expiration_date" value="<?php echo $arr_val['expiry'];?>" disabled>
+                                        <label for="expiration_date" class="form-control-label text-uppercase text-primary font-weight-bold">Serial No.</label>
+                                        <input type="text" class="form-control" id="expiration_date" value="<?php echo $arr_val['expiry'];?>" disabled>
                                       </div>
 
                                     </div>
@@ -283,8 +283,8 @@ if (is_login_auth()) {
                                         <input list="actual_sku" class="form-control" name="actual_sku" value="<?php echo $arr_val['sku_code']; ?>">
                                         <datalist id="actual_sku">
                                           <?php foreach($db_items as $arr_key => $db_val){  ?>
-                                            <option value="<?php echo $db_val['sap_code']; ?>">
-                                              <?php echo $db_val['sap_code'].'-'.$db_val['material_description']; ?>
+                                            <option value="<?php echo $db_val['sku_code']; ?>">
+                                              <?php echo $db_val['sku_code'].'-'.$db_val['material_description']; ?>
                                             </option>
                                           <?php } ?>
                                         </datalist>
@@ -293,15 +293,15 @@ if (is_login_auth()) {
                                       <!-- Qty -->
                                       <div class="mt-1">
                                         <label for="qty_case" class="form-control-label text-uppercase text-primary font-weight-bold">
-                                          Actual Received Quantity (Cases)
+                                          Actual Received Quantity (Pc)
                                         </label>
                                         <input type="number" step = "1" class="form-control" id="qty_case" name="qty_case" value="<?php echo $arr_val['qty_case']; ?>"></input>
                                       </div>
 
                                       <!-- Expiration Date -->
                                       <div class="mt-1">
-                                        <label for="expiration_date" class="form-control-label text-uppercase text-primary font-weight-bold">Expiration Date/Best Before Date (BBD)</label>
-                                        <input type="date" class="form-control" id="expiration_date" name="expiration_date" value="<?php echo $arr_val['expiry']; ?>">
+                                        <label for="expiration_date" class="form-control-label text-uppercase text-primary font-weight-bold">Serial No.</label>
+                                        <input type="text" class="form-control" id="expiration_date" name="expiration_date" value="<?php echo $arr_val['expiry']; ?>">
                                       </div>
 
                                     </div>
