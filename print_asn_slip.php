@@ -56,7 +56,7 @@ $pdf->AddPage();
 
 $tb_header=new easyTable($pdf, 3);
 $tb_header->rowStyle('border:0');
-$tb_header->easyCell('', 'img:img/pepsi_logo.png, w15; align:C; valign:M ;rowspan:3');
+$tb_header->easyCell('', 'img:img/agl_logo.png, w35; align:C; valign:M ;rowspan:3');
 $tb_header->easyCell('Arrowgo-Logistics Inc.', 'font-size:10; font-style:BI; align:C; valign:B');
 $tb_header->easyCell('', ' align:C; valign:M ;rowspan:3');
 $tb_header->printRow();

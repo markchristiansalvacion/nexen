@@ -140,27 +140,27 @@ $all_category = $db->query('SELECT * FROM tb_category')->fetch_all();
                             </select>
                           </div>
                         </div>
-                        <div class="mb-3 row">
+                        <!-- <div class="mb-3 row">
                           <label class="col-lg-4 col-form-label" for="manufacturer">Manufacturer <span class="text-danger">*</span>
                           </label>
                             <div class="col-lg-6">
                               <input type="text" class="form-control" placeholder="Enter Manufacturer" name="manufacturer" id="manufacturer" required />
                             </div>
-                        </div>
-                        <div class="mb-3 row">
+                        </div> -->
+                        <!-- <div class="mb-3 row">
                           <label class="col-lg-4 col-form-label" for="dot">DOT<span class="text-danger">*</span>
                           </label>
                             <div class="col-lg-6">
                               <input type="text" class="form-control" placeholder="DOT eg. 2023" name="dot" id="dot" required />
                             </div>
-                        </div>
-                        <div class="mb-3 row">
+                        </div> -->
+                        <!-- <div class="mb-3 row">
                           <label class="col-lg-4 col-form-label" for="tire_brand">Tire Brand<span class="text-danger">*</span>
                           </label>
                             <div class="col-lg-6">
                               <input type="text" class="form-control" placeholder="Enter Tire Brand" name="tire_brand" id="tire_brand" required />
                             </div>
-                        </div>
+                        </div> -->
                         <div class="mb-3 row">
                           <label class="col-lg-4 col-form-label" for="tire_size">Tire Size<span class="text-danger">*</span>
                           </label>
@@ -203,7 +203,7 @@ $all_category = $db->query('SELECT * FROM tb_category')->fetch_all();
                               <input type="number" min="1" step=".1" class="form-control" placeholder="Enter Ply Rating" name="ply_rating" id="ply_rating" required />
                             </div>
                         </div>
-                        <div class="mb-3 row">
+                        <!-- <div class="mb-3 row">
                           <label class="col-lg-4 col-form-label" for="origin">Origin<span class="text-danger">*</span>
                           </label>
                             <div class="col-lg-6">
@@ -228,7 +228,7 @@ $all_category = $db->query('SELECT * FROM tb_category')->fetch_all();
                             <div class="col-lg-6">
                               <input type="number" min="1" step=".1" class="form-control" placeholder="Enter CIF" name="cif" id="cif" required />
                             </div>
-                        </div>
+                        </div> -->
                         <div class="mb-3 row">
                           <label class="col-lg-4 col-form-label" for="type">Type
                             <span class="text-danger">*</span>
@@ -236,7 +236,7 @@ $all_category = $db->query('SELECT * FROM tb_category')->fetch_all();
                           <div class="col-lg-6">
                             <select name="type" id="type" class="form-control" required>
                               <option value="">Select Type</option>
-                              <option value="regulated">Tire</option>
+                              <option value="Tire">Tire</option>
                             </select>
                           </div>
                         </div>

@@ -29,7 +29,8 @@ $db_pallet = $db->query('SELECT
   INNER JOIN tb_assembly_build ON tb_assembly_build.id = a.ab_id 
   INNER JOIN tb_items on tb_items.sku_code = a.sku_code
   INNER JOIN tb_asn ON tb_asn.id = tb_assembly_build.asn_id
-  WHERE tb_assembly_build.document_no = ?', $_GET['document_no'])->fetch_all();
+  WHERE tb_assembly_build.document_no = ?
+  AND a.transaction_type = ?', $_GET['document_no'], "INB")->fetch_all();
 
 
 

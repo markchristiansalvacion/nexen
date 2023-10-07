@@ -128,7 +128,7 @@ if (is_login_auth()) {
             FROM tb_asn a
             LEFT JOIN tb_items on tb_items.sku_code = a.sku_code
           WHERE a.eta BETWEEN ? AND ?
-          ORDER BY a.eta DESC ', $week_start,$week_end)->fetch_all();
+          ORDER BY a.eta DESC,a.id ASC ', $week_start,$week_end)->fetch_all();
 
         //print_r_html($db_asn);
 
@@ -147,6 +147,7 @@ if (is_login_auth()) {
                     <thead>
                       <tr>
                         <th class="align-middle text-center">Action</th>
+                        <th class="align-middle text-center">ID</th>
                         <th class="align-middle text-center">Uploading File Name</th>
                         <th class="align-middle text-center">PRF</th>
                         <th class="align-middle text-center">Source Doc.</th>
@@ -164,28 +165,54 @@ if (is_login_auth()) {
                         <tr>
                           <td>
                             <div class="d-flex">
-                              <a  data-toggle="modal" data-target="#update_details<?php echo $arr_det['id'];?>" class="btn btn-primary shadow btn-xs sharp me-1" title="View/Update"><i class="fas fa-pencil-alt"></i></a>
-                              <a target="_blank" href="<?php echo "print_asn_slip?db_id={$arr_det['id']}";?>" class="btn btn-warning shadow btn-xs sharp me-1" title="ASN Slip"><i class="fa-solid fa-print"></i></a>
-                              <a data-toggle="modal" data-target="#goods_receipt<?php echo $arr_det['id'];?>" class="btn btn-info shadow btn-xs sharp me-1" title="Post Goods"><i class="fa-solid fa-box"></i></a>
-                              <?php if(!empty($arr_det['actual_qty']) || $arr_det['actual_qty'] != null){ ?>
+                              <?php if(is_null($arr_det['material_description'])){?>
+                                <a  data-toggle="modal" data-target="#update_details<?php echo $arr_det['id'];?>" class="btn btn-danger shadow btn-xs sharp me-1" title="Disabled" style="pointer-events: none"><i class="fas fa-pencil-alt"></i></a>
+                              <?php }else{ ?>
+                                <a  data-toggle="modal" data-target="#update_details<?php echo $arr_det['id'];?>" class="btn btn-primary shadow btn-xs sharp me-1" title="View/Update"><i class="fas fa-pencil-alt"></i></a>
+                              <?php } ?>
+                              <!-- <a  data-toggle="modal" data-target="#update_details<?php echo $arr_det['id'];?>" class="btn btn-primary shadow btn-xs sharp me-1" title="View/Update"><i class="fas fa-pencil-alt"></i></a> -->
+
+                              <?php if(is_null($arr_det['material_description'])){?>
+                                <a target="_blank" href="<?php echo "print_asn_slip?db_id={$arr_det['id']}";?>" class="btn btn-danger shadow btn-xs sharp me-1" title="Disabled" style="pointer-events: none"><i class="fa-solid fa-print"></i></a>
+                              <?php }else{ ?>
+                                <a target="_blank" href="<?php echo "print_asn_slip?db_id={$arr_det['id']}";?>" class="btn btn-warning shadow btn-xs sharp me-1" title="ASN Slip"><i class="fa-solid fa-print"></i></a>
+                              <?php } ?>
+
+                              <?php if(is_null($arr_det['material_description'])){?>
+                                <a data-toggle="modal" data-target="#goods_receipt<?php echo $arr_det['id'];?>" class="btn btn-danger shadow btn-xs sharp me-1" title="Disabled" style="pointer-events: none"><i class="fa-solid fa-box"></i></a>
+                              <?php }else{ ?>
+                                <a data-toggle="modal" data-target="#goods_receipt<?php echo $arr_det['id'];?>" class="btn btn-info shadow btn-xs sharp me-1" title="Post Goods"><i class="fa-solid fa-box"></i></a>
+                              <?php } ?>
+
+                              
+                              <?php if($arr_det['actual_qty'] != 0){ ?>
                                 <a target="_blank" href="<?php echo "print_goods_receipt?doc_no={$arr_det['document_no']}&asn_id={$arr_det['id']}";?>" class="btn btn-success shadow btn-xs sharp me-1" title="Print Receipt"><i class="fa-solid fa-print"></i></a>
-                                <a  data-toggle="modal" data-target="#incident_report<?php echo $arr_det['id'];?>" class="btn btn-danger shadow btn-xs sharp me-1" title="Incident Report"><i class="fa-solid fa-triangle-exclamation"></i></a>
+                                <?php if($arr_det['qty_case'] != $arr_det['actual_qty'] || $arr_det['sku_code'] != $arr_det['actual_sku']){ ?>
+                                  <a  data-toggle="modal" data-target="#incident_report<?php echo $arr_det['id'];?>" class="btn btn-danger shadow btn-xs sharp me-1" title="Incident Report"><i class="fa-solid fa-triangle-exclamation"></i></a>
+                                <?php } ?>
                               <?php } ?>
                             </div>												
 												  </td>
+                          <td class="align-middle text-center" ><?php echo $arr_det['id']; ?></td>
                           <td class="align-middle text-center" ><?php echo $arr_det['uploading_file_name']; ?></td>
                           <td class="align-middle text-center" ><?php echo "PRF-" . $arr_det['ref_no']; ?></td>
                           <td class="align-middle text-center" ><?php echo $arr_det['document_no']; ?></td>
                           <td class="align-middle text-center" ><?php echo $arr_det['eta']; ?></td>
                           <td class="align-middle text-center "><?php echo $arr_det['source_code']; ?></td>
-                          <td class="align-middle text-center "><?php echo $arr_det['sku_code']; ?></td>
+                          <?php if(is_null($arr_det['material_description'])){ ?>
+                            <td>
+                              <span class='badge badge-sm light badge-danger'> <i class='fa fa-circle text-danger me-1'></i>Item Not in Masterlist</span>
+                            </td>
+                          <?php }else{?>
+                            <td class="align-middle text-center "><?php echo $arr_det['sku_code']; ?></td>
+                          <?php } ?>
                           <td class="align-middle text-center "><?php echo $arr_det['truck_type']; ?></td>
                           
             
                           <td class = 'align-middle text-center'>
                             <?php
 
-                              if (empty($arr_det['actual_qty']) || $arr_det['actual_qty'] == null) {
+                              if (empty($arr_det['actual_qty']) || $arr_det['actual_qty'] == 0) {
                                 echo "<span class='badge badge-sm light badge-warning'> <i class='fa fa-circle text-warning me-1'></i>Pending</span>";
                               }else{
 
@@ -203,7 +230,7 @@ if (is_login_auth()) {
                           <td class = 'align-middle text-center'>
                             <?php
 
-                              if (empty($arr_det['actual_qty']) || $arr_det['actual_qty'] == null) {
+                              if (empty($arr_det['actual_qty']) || $arr_det['actual_qty'] == 0) {
                                 echo "<span class='badge badge-sm light badge-warning'> <i class='fa fa-circle text-warning me-1'></i>Pending</span>";
                               }else{
 

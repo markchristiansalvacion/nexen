@@ -4,7 +4,7 @@ require_once 'includes/load.php';
 
 if(!is_array_has_empty_input($_POST)){
 
-   print_r_html($_POST);
+  //  print_r_html($_POST);
 
     $ab_ref_no = generate_reference_no($db,20);
     $asn_id = $db->escape_string($_POST['db_id']);
@@ -20,7 +20,7 @@ if(!is_array_has_empty_input($_POST)){
 
     if($insert_to_ab -> affected_rows()){
 
-      $update_asn_table = $db->query('UPDATE tb_asn SET actual_sku = ? ,actual_qty= actual_qty + ? WHERE id =?', $sku_code, $qty_case, $asn_id);
+      $update_asn_table = $db->query('UPDATE tb_asn SET actual_sku = ? ,actual_qty = actual_qty + ? WHERE id =?', $sku_code, $qty_case, $asn_id);
 
       if($update_asn_table->affected_rows()){
         $_SESSION['msg_heading'] = "Success!";

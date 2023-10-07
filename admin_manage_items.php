@@ -102,13 +102,13 @@ $all_items = $db->query('SELECT * FROM tb_items ORDER BY id DESC')->fetch_all();
                         <th class="align-middle text-center  font-weight-bold ">Mat. Desc.</th>
                         <th class="align-middle text-center  font-weight-bold ">Category</th>
                         <th class="align-middle text-center  font-weight-bold ">Size</th>
-                        <th class="align-middle text-center  font-weight-bold ">Manufacturer</th>
+                        <!-- <th class="align-middle text-center  font-weight-bold ">Manufacturer</th> -->
                          <!-- <th class="align-middle text-center  font-weight-bold ">Weight Per Box</th> -->
                         <!-- <th class="align-middle text-center  font-weight-bold ">CBM Per Box</th> -->
                         <th class="align-middle text-center  font-weight-bold ">Load Index</th>
                         <th class="align-middle text-center  font-weight-bold ">Speed Rating</th>
                         <th class="align-middle text-center  font-weight-bold ">Ply Rating</th>
-                        <th class="align-middle text-center  font-weight-bold ">Origin</th>
+                        <!-- <th class="align-middle text-center  font-weight-bold ">Origin</th> -->
                         <!-- <th class="align-middle text-center  font-weight-bold ">Action</th> -->
                       </tr>
                     </thead>
@@ -119,11 +119,9 @@ $all_items = $db->query('SELECT * FROM tb_items ORDER BY id DESC')->fetch_all();
                           <td class="align-middle text-center"><?php echo $arr_val['material_description']; ?></td>
                           <td class="align-middle text-center"><?php echo $arr_val['category']; ?></td>
                           <td class="align-middle text-center"><?php echo $arr_val['tire_size']; ?></td>
-                          <td class="align-middle text-center"><?php echo $arr_val['manufacturer']; ?></td>
                           <td class="align-middle text-center"><?php echo $arr_val['load_index']; ?></td>
                           <td class="align-middle text-center"><?php echo $arr_val['speed_rating']; ?></td>
                           <td class="align-middle text-center"><?php echo $arr_val['ply_rating']; ?></td>
-                          <td class="align-middle text-center"><?php echo $arr_val['origin']; ?></td>
                           <!-- <td> -->
                             <!-- <div class="d-flex"> -->
                               <!-- <a data-toggle="modal" data-target="#update_details<?php echo $arr_val['id']; ?>" class="btn btn-info shadow btn-xs sharp" title="Update"><i class="fa-solid fa-pen-to-square"></i></a> -->
